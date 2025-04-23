@@ -1,4 +1,4 @@
-import 'package:mustache_template/mustache.dart' as m;
+import '../flutter_mustache.dart' as m;
 import 'node.dart';
 import 'parser.dart' as parser;
 import 'renderer.dart';

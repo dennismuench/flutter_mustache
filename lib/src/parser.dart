@@ -107,8 +107,7 @@ class Parser {
   Token? _read() {
     Token? t;
     if (_offset < _tokens.length) {
-      t = _tokens[_offset];
-      _offset++;
+      t = _tokens[_offset++];
     }
     return t;
   }

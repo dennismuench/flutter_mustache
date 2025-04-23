@@ -1,6 +1,6 @@
 library mustache_test;
 
-import 'package:mustache_template/mustache.dart';
+import '../lib/flutter_mustache.dart';
 import 'package:test/test.dart';
 
 const MISMATCHED_TAG = 'Mismatched tag';
@@ -630,6 +630,11 @@ void main() {
     test('Standalone line', () {
       var val = parse('|\n{{#bob}}\n{{/bob}}\n|').renderString({'bob': []});
       expect(val, equals('|\n|'));
+    });
+    test('Emojis', () {
+      var t = Template('(😈 + <%text%> + 😈)', delimiters: '<% %>');
+      var val = t.renderString({'text': 'Hey!'});
+      expect(val, equals('(😈 + Hey! + 😈)'));
     });
   });
 

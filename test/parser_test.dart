@@ -1,8 +1,8 @@
-import 'package:mustache_template/src/node.dart';
-import 'package:mustache_template/src/parser.dart';
-import 'package:mustache_template/src/scanner.dart';
-import 'package:mustache_template/src/template_exception.dart';
-import 'package:mustache_template/src/token.dart';
+import '../lib/src/node.dart';
+import '../lib/src/parser.dart';
+import '../lib/src/scanner.dart';
+import '../lib/src/template_exception.dart';
+import '../lib/src/token.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -267,6 +267,19 @@ void main() {
       expectNodes((nodes[1] as SectionNode).children, [TextNode('-', 21, 22)]);
     });
 
+    test('parse well with emojis', () {
+      var source = '{{= <%  %> =}}(😇 + <% text %> + ✝️✝️✝️ <%more_text%> 😇✝️)';
+      var parser = Parser(source, 'foo', '{{ }}', lenient: false);
+      var nodes = parser.parse();
+      expectNodes(nodes, [
+        TextNode('(😇 + ', 14, 19),
+        VariableNode('text', 19, 29),
+        TextNode(' + ✝️✝️✝️ ', 29, 39),
+        VariableNode('more_text', 39, 52),
+        TextNode(' 😇✝️)', 52, 57),
+      ]);
+    });
+
     test('corner case strict', () {
       var source = '{{{ #foo }}} {{{ /foo }}}';
       var parser = Parser(source, 'foo', '{{ }}', lenient: false);
@@ -381,28 +394,25 @@ bool nodeEqual(a, b) {
         a.start == b.start &&
         a.end == b.end;
   } else if (a is VariableNode) {
-    return a is VariableNode &&
-        a.name == b.name &&
+    return a.name == b.name &&
         a.escape == b.escape &&
         a.start == b.start &&
         a.end == b.end;
   } else if (a is SectionNode) {
-    return a is SectionNode &&
-        a.name == b.name &&
+    return a.name == b.name &&
         a.delimiters == b.delimiters &&
         a.inverse == b.inverse &&
         a.start == b.start &&
         a.end == b.end;
   } else if (a is PartialNode) {
-    return a is PartialNode && a.name == b.name && a.indent == b.indent;
+    return a.name == b.name && a.indent == b.indent;
   } else {
     return false;
   }
 }
 
 bool tokenEqual(Token a, Token b) {
-  return a is Token &&
-      a.type == b.type &&
+  return a.type == b.type &&
       a.value == b.value &&
       a.start == b.start &&
       a.end == b.end;

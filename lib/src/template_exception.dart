@@ -1,4 +1,4 @@
-import 'package:mustache_template/mustache.dart' as m;
+import '../flutter_mustache.dart' as m;
 
 class TemplateException implements m.TemplateException {
   TemplateException(this.message, this.templateName, this.source, this.offset);

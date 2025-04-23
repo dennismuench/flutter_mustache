@@ -8,7 +8,7 @@ library mustache_specs;
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:mustache_template/mustache.dart';
+import '../lib/flutter_mustache.dart';
 import 'package:test/test.dart';
 
 String render(source, values, {partial}) {

@@ -4,7 +4,8 @@ import 'template_exception.dart';
 class Scanner {
   Scanner(String source, this._templateName, String? delimiters)
       : _source = source,
-        _itr = source.runes.iterator {
+        _itr = source.runes.iterator,
+        _runesList = source.runes.toList() {
     if (source == '') {
       _c = _EOF;
     } else {
@@ -33,6 +34,7 @@ class Scanner {
   final String _source;
 
   final Iterator<int> _itr;
+  final List<int> _runesList;
   int _offset = 0;
   int _c = 0;
 
@@ -115,8 +117,8 @@ class Scanner {
     while (_peek() != _EOF && test(_peek())) {
       _read();
     }
-    var end = _peek() == _EOF ? _source.length : _offset;
-    return _source.substring(start, end);
+    var end = _peek() == _EOF ? _runesList.length : _offset;
+    return String.fromCharCodes(_runesList.sublist(start, end));
   }
 
   void _expect(int expectedCharCode) {

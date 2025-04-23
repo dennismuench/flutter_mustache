@@ -1,4 +1,4 @@
-import 'package:mustache_template/mustache.dart' as m;
+import '../flutter_mustache.dart' as m;
 import 'lambda_context.dart';
 import 'node.dart';
 import 'template.dart';
@@ -43,7 +43,7 @@ class Renderer extends Visitor {
 
   void push(value) => _stack.add(value);
 
-  Object pop() => _stack.removeLast();
+  dynamic pop() => _stack.removeLast();
 
   void write(Object output) => sink.write(output.toString());
 

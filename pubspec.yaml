@@ -1,4 +1,4 @@
-name: mustache_template
+name: flutter_mustache
 version: 2.0.0
 description: A mustache template library that supports dart2js and dart2native
 homepage: https://github.com/jonahwilliams/mustache
